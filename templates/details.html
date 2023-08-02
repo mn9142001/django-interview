@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="{% static 'styles/tailwind.css' %}"></script>
+
+    </head>
+    <body class="flex justify-center w-screen h-screen">
+        <a class="text-blue-500 font-bold" href="{% url 'home' %}">Go Home</a>
+
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        <div class="flex flex-wrap justify-around w-1/2 items-center">
+            <img class="h-72 rounded-md" src={{object.image.url}} />
+            
+            {% if user_ip == object.ip %}
+                <form method="post" action="{% url 'upload' object.slug %}">
+                    {% csrf_token %}
+                    <button class="bg-red-500 text-white w-24 rounded-md p-4 h-fit">
+                        Delete
+                    </button>
+                </form>        
+            {% endif %}
+            
+            <button class="bg-blue-500 text-white p-4 rounded-md" id="shareBtn">Copy Link</button>
+
+        </div>
+        <script>
+            share_Btn = document.getElementById("shareBtn")
+            share_Btn.onclick = e => {
+                navigator.clipboard.writeText(window.location);
+            }
+        </script>
+    </body>
+</html>

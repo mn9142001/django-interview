@@ -1,0 +1,12 @@
+{% load static %}
+
+{% block logout %}
+<script src="{% static 'styles/tailwind.css' %}"></script>
+<nav class="w-full p-2 text-white font-bold rounded-md bg-gray-500 flex justify-end">
+    <form method="POST" action="{% url 'logout' %}">
+        {% csrf_token %}
+        <button>LogOut</button>
+    </form>
+</nav>
+
+{% endblock logout %}
